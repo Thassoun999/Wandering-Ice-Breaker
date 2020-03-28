@@ -7,28 +7,46 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
-    private List<List<int>> tileStart = new List<List<int>>();
+    //Double Lists used to tracking and displaying gamestate
+    private List<List<int>> gridStatus = new List<List<int>>();
     public List<List<GameObject>> tiles = new List<List<GameObject>>();
+
+    //Assets
     public GameObject ice;
     public GameObject foxPrefab;
     public GameObject player;
     private Sprite[] iceSprites;
+
+    //Coordinates of the center of the grid (for aligning to center of screen)
     private int centerR;
     private int centerC;
+
+    //Current coords of the player
     public int foxR;
     public int foxC;
 
+    //Sound related
     public AudioClip crack;
     public AudioClip loseSound;
     public AudioClip winSound;
     AudioSource audioSource;
     private bool pause = false;
 
+    private List<int> walkableTiles = new List<int>(); //List of which sprites can be stood on
+
     void Awake()
     {
+        //Defines which tiles can be stood on
+        walkableTiles.Add(0);
+        walkableTiles.Add(1);
+        walkableTiles.Add(3);
+        walkableTiles.Add(4);
+        walkableTiles.Add(5);
+
         audioSource = GetComponent<AudioSource>();
         iceSprites = Resources.LoadAll<Sprite>("Ice Tile");
 
+        //Load level data from CVS with name matching the scene, i.e. Scene "LV2" uses "LV2.csv"
         TextAsset tileData = Resources.Load<TextAsset>(SceneManager.GetActiveScene().name);
 
         string[] data = tileData.text.Split(new char[] {  '\n' });
@@ -36,27 +54,41 @@ public class LevelManager : MonoBehaviour {
         for (int i = 1; i <data.Length - 1; i++)
         {
             List<int> newRow = new List<int>();
-            tileStart.Add(newRow);
+            gridStatus.Add(newRow);
             string[] row = data[i].Split(new char[] { ',' });
 
             for(int j = 0; j < row.Length; j++)
             {
-                tileStart[i - 1].Add(int.Parse(row[j]));
+                gridStatus[i - 1].Add(int.Parse(row[j]));
             }
             
         }
 
-        centerR = tileStart.Count / 2;
-        centerC = tileStart[0].Count / 2;
+        centerR = gridStatus.Count / 2;
+        centerC = gridStatus[0].Count / 2;
 
-        for(int i = 0; i < tileStart.Count; i++)
+        //Loop through grid looking for starting location (Denoted as -1)
+        for (int i = 0; i < gridStatus.Count; i++)
+        {
+            for (int j = 0; j < gridStatus[i].Count; j++)
+            {
+                if (gridStatus[i][j] == 9)
+                {
+                    foxR = i;
+                    foxC = j;
+                    gridStatus[i][j] = 1;
+                }
+            }
+        }
+
+        for (int i = 0; i < gridStatus.Count; i++)
         {
             tiles.Add(new List<GameObject>());
-            for(int j = 0; j < tileStart[i].Count; j++)
+            for(int j = 0; j < gridStatus[i].Count; j++)
             {
                 GameObject tile = Instantiate(ice, new Vector3( (j-centerC) * 0.64f, (centerR-i) * 0.64f, transform.position.z) , Quaternion.identity);
                 tile.transform.parent = this.gameObject.transform;
-                tile.GetComponent<SpriteRenderer>().sprite = iceSprites[tileStart[i][j]];
+                tile.GetComponent<SpriteRenderer>().sprite = iceSprites[gridStatus[i][j]];
                 tile.name = i + " " + j;
                 tiles[i].Add(tile);
             }
@@ -66,88 +98,131 @@ public class LevelManager : MonoBehaviour {
 
     void Start()
     {
-
-        foxR = tiles.Count-1;
-
-        if(SceneManager.GetActiveScene().name == "L1" || SceneManager.GetActiveScene().name == "L2" || SceneManager.GetActiveScene().name == "L3")
-        {
-            foxC = 2;
-        }
-        else
-        {
-            foxC = 3;
-        }
         player = Instantiate(foxPrefab, new Vector3((centerC - foxC) * 0.64f, (centerR - tiles.Count + 1) * 0.64f, transform.position.z), Quaternion.identity);
         
     }
     
     void Update()
     {
+        //Control to restart level
         if (Input.GetKeyDown("r"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        //Movement controls
         if ((Input.GetKeyDown("up") || Input.GetKeyDown("w")) && !pause)
         {
-            if (tileStart[foxR-1][foxC] == 0 || tileStart[foxR - 1][foxC] == 1)
+            //if (gridStatus[foxR-1][foxC] == 0 || gridStatus[foxR - 1][foxC] == 1)
+            if (walkableTiles.Contains(gridStatus[foxR - 1][foxC]))
             {
                 player.transform.position = player.transform.position + new Vector3(0, 0.64f, 0);
                 foxR--;
-                UpdateTile(foxR,foxC);
+                UpdateTile(foxR,foxC, 0);
             }
             
         }
         if ((Input.GetKeyDown("down") || Input.GetKeyDown("s")) && !pause)
         {
-            if (tileStart[foxR + 1][foxC] == 0 || tileStart[foxR + 1][foxC] == 1)
+            //if (gridStatus[foxR + 1][foxC] == 0 || gridStatus[foxR + 1][foxC] == 1)
+            if (walkableTiles.Contains(gridStatus[foxR + 1][foxC]))
             {
                 player.transform.position = player.transform.position + new Vector3(0, -0.64f, 0);
                 foxR++;
-                UpdateTile(foxR, foxC);
+                UpdateTile(foxR, foxC, 1);
             }
 
         }
         if ((Input.GetKeyDown("left") || Input.GetKeyDown("a")) && !pause)
         {
-            if (tileStart[foxR][foxC-1] == 0 || tileStart[foxR][foxC-1] == 1)
+            //if (gridStatus[foxR][foxC-1] == 0 || gridStatus[foxR][foxC-1] == 1)
+            if (walkableTiles.Contains(gridStatus[foxR][foxC - 1]))
             {
                 player.transform.position = player.transform.position + new Vector3(-0.64f, 0, 0);
                 foxC--;
-                UpdateTile(foxR, foxC);
+                UpdateTile(foxR, foxC, 2);
             }
 
         }
         if ((Input.GetKeyDown("right") || Input.GetKeyDown("d")) && !pause)
         {
-            if (tileStart[foxR][foxC+1] == 0 || tileStart[foxR][foxC+1] == 1)
+            //if (gridStatus[foxR][foxC+1] == 0 || gridStatus[foxR][foxC+1] == 1)
+            if (walkableTiles.Contains(gridStatus[foxR][foxC + 1]))
             {
                 player.transform.position = player.transform.position + new Vector3(0.64f, 0, 0);
                 foxC++;
-                UpdateTile(foxR, foxC);
+                UpdateTile(foxR, foxC, 3);
             }
 
         }
     }
 
-    void UpdateTile(int R, int C)
+    void UpdateTile(int R, int C, int direction) //directions: 0 = north, 1 = south, 2 = West, 3 East
     {
-        tileStart[R][C]++;
-        tiles[R][C].GetComponent<SpriteRenderer>().sprite = iceSprites[tileStart[R][C]];
-        audioSource.PlayOneShot(crack,0.5f);
+        //Update tile if it's breakable
+        if (gridStatus[R][C] == 0 || gridStatus[R][C] == 1)
+        {
+            gridStatus[R][C]++;
+            tiles[R][C].GetComponent<SpriteRenderer>().sprite = iceSprites[gridStatus[R][C]];
+            audioSource.PlayOneShot(crack, 0.5f);
+        }
 
-        if (tileStart[R][C] == 2) //lose
+        //If player steps on slippery ice
+        if (gridStatus[R][C] == 4)
+        {
+            if(direction == 0)
+            {
+                if (walkableTiles.Contains(gridStatus[foxR - 1][foxC]))
+                {
+                    player.transform.position = player.transform.position + new Vector3(0, 0.64f, 0);
+                    foxR--;
+                    UpdateTile(foxR, foxC, 0);
+                }
+            }
+            if (direction == 1)
+            {
+                if (walkableTiles.Contains(gridStatus[foxR + 1][foxC]))
+                {
+                    player.transform.position = player.transform.position + new Vector3(0, -0.64f, 0);
+                    foxR++;
+                    UpdateTile(foxR, foxC, 1);
+                }
+            }
+            if (direction == 2)
+            {
+                if (walkableTiles.Contains(gridStatus[foxR][foxC - 1]))
+                {
+                    player.transform.position = player.transform.position + new Vector3(-0.64f, 0, 0);
+                    foxC--;
+                    UpdateTile(foxR, foxC, 2);
+                }
+            }
+            if (direction == 3)
+            {
+                if (walkableTiles.Contains(gridStatus[foxR][foxC + 1]))
+                {
+                    player.transform.position = player.transform.position + new Vector3(0.64f, 0, 0);
+                    foxC++;
+                    UpdateTile(foxR, foxC, 3);
+                }
+            }
+        }
+
+        //Checks if player fell through the ice
+        if (gridStatus[R][C] == 2)
         {
             Destroy(player);
             StartCoroutine(Lose());
         }
 
-        if (R == 0) //beat level
+        //If player walks over destination tile (denoted as 5)
+        if (gridStatus[R][C] == 5) 
         {
-            for(int i = 0; i < tileStart.Count; i++)
+            for(int i = 0; i < gridStatus.Count; i++)
             {
-                for(int j =0; j < tileStart[0].Count; j++)
+                for(int j =0; j < gridStatus[0].Count; j++)
                 {
-                    if(tileStart[i][j] == 0)
+                    if(gridStatus[i][j] == 0)
                     {
                         return;
                     }
