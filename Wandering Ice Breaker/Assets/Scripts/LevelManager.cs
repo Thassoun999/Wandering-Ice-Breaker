@@ -14,8 +14,11 @@ public class LevelManager : MonoBehaviour {
     //Assets
     public GameObject ice;
     public GameObject foxPrefab;
+    public GameObject greyFoxSpiritPrefab;
     public GameObject player;
     private Sprite[] iceSprites;
+
+    public GameObject[] greyFoxSpiritArray; // Records all instantiations
 
     //Coordinates of the center of the grid (for aligning to center of screen)
     private int centerR;
@@ -24,6 +27,15 @@ public class LevelManager : MonoBehaviour {
     //Current coords of the player
     public int foxR;
     public int foxC;
+
+    //Current coords of all enemy AI -- Grey Fox Spirit
+    public List<List<int>> greyFoxCoords = new List<List<int>>(); // Records all coordinates of all grey foxes
+    private int greyFoxCount = 0; // How many?
+    private List<int> aiDirections = new List<int>(); // For each AI figure out Vertical or Horizontal
+    private List<bool> aiOrientation = new List<bool>(); // For each AI, figure out up / right (TRUE) or down / left (FALSE)
+
+    private float maxTimerAIMove = 2.0f; // Have this kept on hand! MAX Timer for AI move!
+    private float timerAIMove = 2.0f; // This will decrease per second, once it hits 0 the AI moves and we reset it to above variable
 
     //Sound related
     public AudioClip crack;
@@ -78,6 +90,14 @@ public class LevelManager : MonoBehaviour {
                     foxC = j;
                     gridStatus[i][j] = 1;
                 }
+
+                // Grey Fox Spirit Enemy Location --> 11 for Horizontal, 12 for Vertical
+                if (gridStatus[i][j] == 11 || gridStatus[i][j] == 12)
+                {
+                    List<int> AiLocGrey = new List<int>() { i, j, gridStatus[i][j]}; // Record location
+                    greyFoxCoords.Add(AiLocGrey); // Add location
+                    greyFoxCount++; // increase greyFoxCount
+                }
             }
         }
 
@@ -99,7 +119,19 @@ public class LevelManager : MonoBehaviour {
     void Start()
     {
         player = Instantiate(foxPrefab, new Vector3((centerC - foxC) * 0.64f, (centerR - tiles.Count + 1) * 0.64f, transform.position.z), Quaternion.identity);
-        
+
+
+        greyFoxSpiritArray = new GameObject[greyFoxCount];
+        // For loop instantiating game objects and adding them in!
+        for (int i = 0; i < greyFoxCount; i++)
+        {
+            GameObject greyFox = new GameObject(); // Create new spirit object
+            // Instantiate + add object to array + record its direction
+            greyFox = Instantiate(greyFoxSpiritPrefab, new Vector3((centerC - greyFoxCoords[i][1]) * 0.64f, (centerR - greyFoxCoords[i][0] + 1) * 0.64f, transform.position.z), Quaternion.identity);
+            greyFoxSpiritArray[i] = greyFox;
+            aiDirections.Add(greyFoxCoords[i][2]); // Verticle or Horizontal
+            aiOrientation.Add(true); // All start by going up / right
+        }
     }
     
     void Update()
@@ -152,8 +184,105 @@ public class LevelManager : MonoBehaviour {
                 player.transform.position = player.transform.position + new Vector3(0.64f, 0, 0);
                 foxC++;
                 UpdateTile(foxR, foxC, 3);
+
             }
 
+        }
+
+        // Move every 1 second
+        timerAIMove -= Time.deltaTime;
+        if(timerAIMove < 0 && greyFoxCount > 0)
+        {
+            //moveAI(); // Move every AI a single tile in their intended direction
+            timerAIMove = maxTimerAIMove; // reset the timer
+        }
+
+        
+
+        // Collision Check between AI and Player
+        if(greyFoxCount > 0)
+        {
+            Debug.Log(greyFoxCount);
+            CollisionCheck();
+        }
+    }
+
+    void moveAI()
+    {
+        // Ai Movement Controls
+        for (int i = 0; i < greyFoxCount; i++)
+        {
+            if (aiDirections[i] == 11) // Horizontal Movement
+            {
+                if (aiOrientation[i] == true) // Right
+                {
+
+                    if (walkableTiles.Contains(gridStatus[greyFoxCoords[i][0]][greyFoxCoords[i][1] + 1]))
+                    {
+                        // Update transform (position) and coordinate record
+                        greyFoxSpiritArray[i].transform.position = greyFoxSpiritArray[i].transform.position + new Vector3(0.64f, 0, 0);
+                        greyFoxCoords[i][1]++;
+                    }
+                    else
+                    {
+                        aiOrientation[i] = false; // change direction if tile not walkable
+                    }
+                }
+                else // Left
+                {
+                    if (walkableTiles.Contains(gridStatus[greyFoxCoords[i][0]][greyFoxCoords[i][1] - 1]))
+                    {
+                        // Update transform (position) and coordinate record
+                        greyFoxSpiritArray[i].transform.position = greyFoxSpiritArray[i].transform.position + new Vector3(-0.64f, 0, 0);
+                        greyFoxCoords[i][1]--;
+                    }
+                    else
+                    {
+                        aiOrientation[i] = true; // change direction if tile not walkable
+                    }
+                }
+            }
+            else if (aiDirections[i] == 12) // Vertical Movement
+            {
+                if (aiOrientation[i] == true) // Up
+                {
+                    if (walkableTiles.Contains(gridStatus[greyFoxCoords[i][0] - 1][greyFoxCoords[i][1]]))
+                    {
+                        // Update transform (position) and coordinate record
+                        greyFoxSpiritArray[i].transform.position = greyFoxSpiritArray[i].transform.position + new Vector3(0, 0.64f, 0);
+                        greyFoxCoords[i][0]--;
+                    }
+                    else
+                    {
+                        aiOrientation[i] = false; // change direction if tile not walkable
+                    }
+                }
+                else // Down
+                {
+                    if (walkableTiles.Contains(gridStatus[greyFoxCoords[i][0] + 1][greyFoxCoords[i][1]]))
+                    {
+                        // Update transform (position) and coordinate record
+                        greyFoxSpiritArray[i].transform.position = greyFoxSpiritArray[i].transform.position + new Vector3(0, -0.64f, 0);
+                        greyFoxCoords[i][0]++;
+                    }
+                    else
+                    {
+                        aiOrientation[i] = true; // change direction if tile not walkable
+                    }
+                }
+            }
+        }
+    }
+
+    void CollisionCheck()
+    {
+        // Look through all the different AI, check if collision
+        for (int i = 0; i < greyFoxCount; i++)
+        {
+            if(greyFoxCoords[i][0] == foxR && greyFoxCoords[i][1] == foxC) // Collision!! Make player lose!
+            {
+                StartCoroutine(Lose());
+            }
         }
     }
 
