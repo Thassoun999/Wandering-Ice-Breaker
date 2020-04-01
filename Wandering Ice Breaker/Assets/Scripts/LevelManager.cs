@@ -34,8 +34,10 @@ public class LevelManager : MonoBehaviour {
     private List<int> aiDirections = new List<int>(); // For each AI figure out Vertical or Horizontal
     private List<bool> aiOrientation = new List<bool>(); // For each AI, figure out up / right (TRUE) or down / left (FALSE)
 
-    private float maxTimerAIMove = 2.0f; // Have this kept on hand! MAX Timer for AI move!
-    private float timerAIMove = 2.0f; // This will decrease per second, once it hits 0 the AI moves and we reset it to above variable
+    private float maxTimerAIMove = 1.0f; // Have this kept on hand! MAX Timer for AI move!
+    private float timerAIMove = 1.0f; // This will decrease per second, once it hits 0 the AI moves and we reset it to above variable
+
+    private bool isHit = false; // Need this so that the player isn't hit multiple times by same spirit (lose sound plays only once and not 1000 times)
 
     //Sound related
     public AudioClip crack;
@@ -121,7 +123,7 @@ public class LevelManager : MonoBehaviour {
     void Start()
     {
         player = Instantiate(foxPrefab, new Vector3((centerC - foxC) * 0.64f, (centerR - tiles.Count + 1) * 0.64f, transform.position.z), Quaternion.identity);
-
+        isHit = false;
 
         greyFoxSpiritArray = new GameObject[greyFoxCount];
         // For loop instantiating game objects and adding them in!
@@ -131,7 +133,7 @@ public class LevelManager : MonoBehaviour {
             // Instantiate + add object to array + record its direction
 
             // Problem 1
-            greyFox = Instantiate(greyFoxSpiritPrefab, new Vector3((centerC - greyFoxCoords[i][1]) * 0.64f, (centerR - greyFoxCoords[i][0] + 1) * 0.64f, transform.position.z), Quaternion.identity);
+            greyFox = Instantiate(greyFoxSpiritPrefab, new Vector3((greyFoxCoords[i][1] - centerC) * 0.64f, (centerR - greyFoxCoords[i][0]) * 0.64f, transform.position.z), Quaternion.identity);
             greyFoxSpiritArray[i] = greyFox;
             aiDirections.Add(greyFoxCoords[i][2]); // Verticle or Horizontal
             aiOrientation.Add(true); // All start by going up / right
@@ -193,7 +195,7 @@ public class LevelManager : MonoBehaviour {
 
         }
 
-        // Move every 2 seconds
+        // Move every 1 second
         timerAIMove -= Time.deltaTime;
         if(timerAIMove < 0 && greyFoxCount > 0)
         {
@@ -285,8 +287,13 @@ public class LevelManager : MonoBehaviour {
         {
             if(greyFoxCoords[i][0] == foxR && greyFoxCoords[i][1] == foxC) // Collision!! Make player lose!
             {
-                Destroy(player);
-                StartCoroutine(Lose());
+                if(isHit == false)
+                {
+                    isHit = true;
+                    Destroy(player);
+                    StartCoroutine(Lose());
+                }
+                
             }
         }
     }

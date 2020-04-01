@@ -677,7 +677,10 @@ MonoBehaviour:
   ice: {fileID: 7507265897030595768, guid: 71c7e80a008c3e840a7241bfd0c6b2a5, type: 3}
   foxPrefab: {fileID: 8096681387566048655, guid: 59d95883ede94f8448c726060b7359e3,
     type: 3}
+  greyFoxSpiritPrefab: {fileID: 3045632467247490951, guid: 5a59a53162fb1e64d887ef256c1ae2f1,
+    type: 3}
   player: {fileID: 0}
+  greyFoxSpiritArray: []
   foxR: 0
   foxC: 0
   crack: {fileID: 8300000, guid: de7420453d1f41048ab2de20d7e721cd, type: 3}
