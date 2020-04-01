@@ -122,7 +122,7 @@ public class LevelManager : MonoBehaviour {
 
     void Start()
     {
-        player = Instantiate(foxPrefab, new Vector3((centerC - foxC) * 0.64f, (centerR - tiles.Count + 1) * 0.64f, transform.position.z), Quaternion.identity);
+        player = Instantiate(foxPrefab, new Vector3((foxC - centerC) * 0.64f, (centerR - tiles.Count + 1) * 0.64f, transform.position.z), Quaternion.identity);
         isHit = false;
 
         greyFoxSpiritArray = new GameObject[greyFoxCount];
@@ -311,42 +311,8 @@ public class LevelManager : MonoBehaviour {
         //If player steps on slippery ice
         if (gridStatus[R][C] == 4)
         {
-            if(direction == 0)
-            {
-                if (walkableTiles.Contains(gridStatus[foxR - 1][foxC]))
-                {
-                    player.transform.position = player.transform.position + new Vector3(0, 0.64f, 0);
-                    foxR--;
-                    UpdateTile(foxR, foxC, 0);
-                }
-            }
-            if (direction == 1)
-            {
-                if (walkableTiles.Contains(gridStatus[foxR + 1][foxC]))
-                {
-                    player.transform.position = player.transform.position + new Vector3(0, -0.64f, 0);
-                    foxR++;
-                    UpdateTile(foxR, foxC, 1);
-                }
-            }
-            if (direction == 2)
-            {
-                if (walkableTiles.Contains(gridStatus[foxR][foxC - 1]))
-                {
-                    player.transform.position = player.transform.position + new Vector3(-0.64f, 0, 0);
-                    foxC--;
-                    UpdateTile(foxR, foxC, 2);
-                }
-            }
-            if (direction == 3)
-            {
-                if (walkableTiles.Contains(gridStatus[foxR][foxC + 1]))
-                {
-                    player.transform.position = player.transform.position + new Vector3(0.64f, 0, 0);
-                    foxC++;
-                    UpdateTile(foxR, foxC, 3);
-                }
-            }
+            StartCoroutine(Slide(direction));
+            
         }
 
         //Checks if player fell through the ice
@@ -389,4 +355,46 @@ public class LevelManager : MonoBehaviour {
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    IEnumerator Slide(int direction)
+    {
+        yield return new WaitForSeconds(0);
+        if (direction == 0)
+        {
+            if (walkableTiles.Contains(gridStatus[foxR - 1][foxC]))
+            {
+                player.transform.position = player.transform.position + new Vector3(0, 0.64f, 0);
+                foxR--;
+                UpdateTile(foxR, foxC, 0);
+            }
+        }
+        if (direction == 1)
+        {
+            if (walkableTiles.Contains(gridStatus[foxR + 1][foxC]))
+            {
+                player.transform.position = player.transform.position + new Vector3(0, -0.64f, 0);
+                foxR++;
+                UpdateTile(foxR, foxC, 1);
+            }
+        }
+        if (direction == 2)
+        {
+            if (walkableTiles.Contains(gridStatus[foxR][foxC - 1]))
+            {
+                player.transform.position = player.transform.position + new Vector3(-0.64f, 0, 0);
+                foxC--;
+                UpdateTile(foxR, foxC, 2);
+            }
+        }
+        if (direction == 3)
+        {
+            if (walkableTiles.Contains(gridStatus[foxR][foxC + 1]))
+            {
+                player.transform.position = player.transform.position + new Vector3(0.64f, 0, 0);
+                foxC++;
+                UpdateTile(foxR, foxC, 3);
+            }
+        }
+    }
+
 }
