@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour {
     public GameObject player;
     private Sprite[] iceSprites;
 
-    public GameObject[] greyFoxSpiritArray; // Records all instantiations
+    public GameObject[] greyFoxSpiritArray; // Records all instances
 
     //Coordinates of the center of the grid (for aligning to center of screen)
     private int centerR;
@@ -97,6 +97,8 @@ public class LevelManager : MonoBehaviour {
                     List<int> AiLocGrey = new List<int>() { i, j, gridStatus[i][j]}; // Record location
                     greyFoxCoords.Add(AiLocGrey); // Add location
                     greyFoxCount++; // increase greyFoxCount
+
+                    gridStatus[i][j] = 0; // Change the bottom into the appropriate tile
                 }
             }
         }
@@ -127,6 +129,8 @@ public class LevelManager : MonoBehaviour {
         {
             GameObject greyFox = new GameObject(); // Create new spirit object
             // Instantiate + add object to array + record its direction
+
+            // Problem 1
             greyFox = Instantiate(greyFoxSpiritPrefab, new Vector3((centerC - greyFoxCoords[i][1]) * 0.64f, (centerR - greyFoxCoords[i][0] + 1) * 0.64f, transform.position.z), Quaternion.identity);
             greyFoxSpiritArray[i] = greyFox;
             aiDirections.Add(greyFoxCoords[i][2]); // Verticle or Horizontal
@@ -189,11 +193,11 @@ public class LevelManager : MonoBehaviour {
 
         }
 
-        // Move every 1 second
+        // Move every 2 seconds
         timerAIMove -= Time.deltaTime;
         if(timerAIMove < 0 && greyFoxCount > 0)
         {
-            //moveAI(); // Move every AI a single tile in their intended direction
+            moveAI(); // Move every AI a single tile in their intended direction
             timerAIMove = maxTimerAIMove; // reset the timer
         }
 
@@ -202,7 +206,7 @@ public class LevelManager : MonoBehaviour {
         // Collision Check between AI and Player
         if(greyFoxCount > 0)
         {
-            Debug.Log(greyFoxCount);
+            //Debug.Log(greyFoxCount);
             CollisionCheck();
         }
     }
@@ -281,6 +285,7 @@ public class LevelManager : MonoBehaviour {
         {
             if(greyFoxCoords[i][0] == foxR && greyFoxCoords[i][1] == foxC) // Collision!! Make player lose!
             {
+                Destroy(player);
                 StartCoroutine(Lose());
             }
         }
