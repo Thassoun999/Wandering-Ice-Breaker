@@ -1,6 +1,4 @@
-﻿/* Author: Alexander Ngo
-*/
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DontDestroy : MonoBehaviour {
     
