@@ -14,7 +14,7 @@ public class GreyFoxSpirit : Enemy //Inherited from Enemy Class
         {
             if (orientation) //right
             {
-                if (walkableTiles.Contains(manager.gridStatus[row][col + 1]))
+                if (col != manager.gridStatus[0].Count-1 && walkableTiles.Contains(manager.gridStatus[row][col + 1]))
                 {
                     gameObject.transform.position = gameObject.transform.position + new Vector3(0.64f, 0, 0);
                     col++;
@@ -26,7 +26,7 @@ public class GreyFoxSpirit : Enemy //Inherited from Enemy Class
             }
             else //left
             {
-                if (walkableTiles.Contains(manager.gridStatus[row][col - 1]))
+                if (col != 0 && walkableTiles.Contains(manager.gridStatus[row][col - 1]))
                 {
                     gameObject.transform.position = gameObject.transform.position + new Vector3(-0.64f, 0, 0);
                     col--;
@@ -41,7 +41,7 @@ public class GreyFoxSpirit : Enemy //Inherited from Enemy Class
         {
             if (orientation) //up
             {
-                if (walkableTiles.Contains(manager.gridStatus[row - 1][col]))
+                if (row != 0 && walkableTiles.Contains(manager.gridStatus[row - 1][col]))
                 {
                     gameObject.transform.position = gameObject.transform.position + new Vector3(0, 0.64f, 0);
                     row--;
@@ -53,7 +53,7 @@ public class GreyFoxSpirit : Enemy //Inherited from Enemy Class
             }
             else //down
             {
-                if (walkableTiles.Contains(manager.gridStatus[row + 1][col]))
+                if (row != manager.gridStatus.Count-1 && walkableTiles.Contains(manager.gridStatus[row + 1][col]))
                 {
                     gameObject.transform.position = gameObject.transform.position + new Vector3(0, -0.64f, 0);
                     row++;

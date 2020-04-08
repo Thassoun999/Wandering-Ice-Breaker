@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
         walkableTiles.Add(3);
         walkableTiles.Add(4);
         walkableTiles.Add(5);
+        walkableTiles.Add(6);
     }
 
     virtual public void Move() {}
