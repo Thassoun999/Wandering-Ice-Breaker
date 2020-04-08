@@ -692,6 +692,8 @@ MonoBehaviour:
     type: 3}
   GreyFoxSpiritPrefab: {fileID: 3045632467247490951, guid: 5a59a53162fb1e64d887ef256c1ae2f1,
     type: 3}
+  WhiteFoxSpiritPrefab: {fileID: 6502177301429663423, guid: 2db72fa2dcfb7f64ea56fa8ff79ed48b,
+    type: 3}
   enemyList: []
   crack: {fileID: 8300000, guid: de7420453d1f41048ab2de20d7e721cd, type: 3}
   loseSound: {fileID: 8300000, guid: c1e3915388a38424b8143d37541bbea0, type: 3}

@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour {
     private Sprite[] iceSprites;
 
     public GameObject GreyFoxSpiritPrefab;
+    public GameObject WhiteFoxSpiritPrefab;
 
     public List<GameObject> enemyList; // Instances of every enemy
 
@@ -105,6 +106,21 @@ public class LevelManager : MonoBehaviour {
                         enemy.GetComponent<GreyFoxSpirit>().direction = "vertical";
                     }
                     enemyList.Add(enemy);
+
+                    gridStatus[i][j] = 0; // Change the bottom into the appropriate tile
+                }
+
+                // White Fox Spirit Enemy Location --> 13
+                if (gridStatus[i][j] == 13)
+                {
+                    GameObject enemy = Instantiate(WhiteFoxSpiritPrefab, new Vector3((j - centerC) * 0.64f, (centerR - i) * 0.64f, transform.position.z), Quaternion.identity);
+                    enemy.AddComponent<WhiteFoxSpirit>();
+                    enemy.GetComponent<Enemy>().row = i;
+                    enemy.GetComponent<Enemy>().col = j;
+                    enemy.GetComponent<Enemy>().manager = this;
+                    enemyList.Add(enemy);
+
+                    enemy.GetComponent<WhiteFoxSpirit>().whiteCount++;
 
                     gridStatus[i][j] = 0; // Change the bottom into the appropriate tile
                 }
