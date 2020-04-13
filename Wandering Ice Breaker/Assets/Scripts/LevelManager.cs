@@ -57,7 +57,7 @@ public class LevelManager : MonoBehaviour {
             
         }
 
-        if(centerR%2 != 0)
+        if(gridStatus.Count % 2 != 0)
         {
             centerR = gridStatus.Count / 2;
         }
@@ -65,7 +65,7 @@ public class LevelManager : MonoBehaviour {
         {
             centerR = (gridStatus.Count / 2) -0.5f;
         }
-        if (centerC % 2 != 0)
+        if (gridStatus[0].Count % 2 != 0)
         {
             centerC = gridStatus[0].Count / 2;
         }
@@ -236,7 +236,12 @@ public class LevelManager : MonoBehaviour {
         pm.pause = true;
         audioSource.PlayOneShot(winSound);
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextScene - 1 > PlayerPrefs.GetInt("levelAt"))
+        {
+            PlayerPrefs.SetInt("levelAt", nextScene - 1);
+        }
+        SceneManager.LoadScene(nextScene);
     }
 
 }
