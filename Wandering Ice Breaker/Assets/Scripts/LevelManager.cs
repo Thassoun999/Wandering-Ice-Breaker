@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour {
 
     public GameObject GreyFoxSpiritPrefab;
     public GameObject WhiteFoxSpiritPrefab;
+    public GameObject PurpleFoxSpiritPrefab;
 
     public List<GameObject> enemyList; // Instances of every enemy
 
@@ -122,6 +123,18 @@ public class LevelManager : MonoBehaviour {
 
                     enemy.GetComponent<WhiteFoxSpirit>().whiteCount++;
 
+                    gridStatus[i][j] = 0; // Change the bottom into the appropriate tile
+                }
+
+                // Purple Fox Spirit Enemy Location --> 14
+                if (gridStatus[i][j] == 14)
+                {
+                    GameObject enemy = Instantiate(PurpleFoxSpiritPrefab, new Vector3((j - centerC) * 0.64f, (centerR - i) * 0.64f, transform.position.z), Quaternion.identity);
+                    enemy.AddComponent<PurpleFoxSpirit>();
+                    enemy.GetComponent<Enemy>().row = i;
+                    enemy.GetComponent<Enemy>().col = j;
+                    enemy.GetComponent<Enemy>().manager = this;
+                    enemyList.Add(enemy);
                     gridStatus[i][j] = 0; // Change the bottom into the appropriate tile
                 }
             }

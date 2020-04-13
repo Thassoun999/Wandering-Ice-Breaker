@@ -32,4 +32,9 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public void setTimer(float newNum)
+    {
+        aiTimer = newNum;
+    }
+
 }
