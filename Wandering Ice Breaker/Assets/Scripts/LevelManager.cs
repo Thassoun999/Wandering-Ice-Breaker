@@ -176,7 +176,7 @@ public class LevelManager : MonoBehaviour {
         // Look through all the different AI, check if collision
         for (int i = 0; i < enemyList.Count; i++)
         {
-            if(enemyList[i].GetComponent<Enemy>().row == pm.row && enemyList[i].GetComponent<Enemy>().col == pm.col) // Collision!! Make player lose!
+            if(enemyList[i].GetComponent<Enemy>().row == pm.row && enemyList[i].GetComponent<Enemy>().col == pm.col && pm.gameObject != null) // Collision!! Make player lose!
             {
                 pm.isHit = true;
                 Destroy(pm.gameObject);
@@ -207,8 +207,12 @@ public class LevelManager : MonoBehaviour {
         //Checks if player fell through the ice
         if (gridStatus[R][C] == 2)
         {
-            Destroy(pm.gameObject);
-            StartCoroutine(Lose());
+            if(pm.gameObject != null)
+            {
+                Destroy(pm.gameObject);
+                StartCoroutine(Lose());
+            }
+           
         }
 
         //If player walks over destination tile (denoted as 5)
