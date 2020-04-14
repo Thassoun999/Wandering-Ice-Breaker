@@ -74,7 +74,7 @@ public class LevelManager : MonoBehaviour {
             centerC = (gridStatus[0].Count / 2) - 0.5f ;
         }
 
-        //Loop through grid looking for starting location (Denoted as 9) and enemy locations (any double digit number)
+        //Finding the player should be the first thing that happens before instantiating all other objects that require player pos
         for (int i = 0; i < gridStatus.Count; i++)
         {
             for (int j = 0; j < gridStatus[i].Count; j++)
@@ -89,7 +89,13 @@ public class LevelManager : MonoBehaviour {
                     pm.col = j;
                     pm.manager = this;
                 }
-
+            }
+        }
+        //Loop through grid looking for starting location (Denoted as 9) and enemy locations (any double digit number)
+        for (int i = 0; i < gridStatus.Count; i++)
+        {
+            for (int j = 0; j < gridStatus[i].Count; j++)
+            {
                 // Grey Fox Spirit Enemy Location --> 11 for Horizontal, 12 for Vertical
                 if (gridStatus[i][j] == 11 || gridStatus[i][j] == 12)
                 {
@@ -244,4 +250,13 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene(nextScene);
     }
 
+    public List<int> getPlayerLocation()
+    {
+        List<int> playerLocation = new List<int>();
+
+        playerLocation.Add(pm.row);
+        playerLocation.Add(pm.col);
+
+        return playerLocation;
+    }
 }
