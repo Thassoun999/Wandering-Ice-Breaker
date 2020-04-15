@@ -56,4 +56,37 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/L15.unity
     guid: d7d9efcd7ba7ee14790e2401a1d20e3d
+  - enabled: 1
+    path: Assets/Scenes/L16.unity
+    guid: 97a24e2c8c78bdc43bb2d8fa01c249e4
+  - enabled: 1
+    path: Assets/Scenes/L17.unity
+    guid: 3c81fef02c7128b41acca4df7c5ae42b
+  - enabled: 1
+    path: Assets/Scenes/L18.unity
+    guid: 2845dc89c9680df41bd0a046737974ac
+  - enabled: 1
+    path: Assets/Scenes/L19.unity
+    guid: a2c5cc640658f7549b45ffa9a89e8e34
+  - enabled: 1
+    path: Assets/Scenes/L20.unity
+    guid: 5b436f0810195e94ba6b29da4220e940
+  - enabled: 1
+    path: Assets/Scenes/L21.unity
+    guid: 9d6a062b2c83fa64790f211e2ffe9414
+  - enabled: 1
+    path: Assets/Scenes/L22.unity
+    guid: 265b29dd64f58324c855887c194e9241
+  - enabled: 1
+    path: Assets/Scenes/L23.unity
+    guid: cd42373061dfa3a42802e5565020b490
+  - enabled: 1
+    path: Assets/Scenes/L24.unity
+    guid: d342051c30e774c46a39eea45e5514ef
+  - enabled: 1
+    path: Assets/Scenes/L25.unity
+    guid: f4b92bbaf2288714bb1b1efeca230581
+  - enabled: 1
+    path: Assets/Scenes/End Screen.unity
+    guid: de50a5ac506e80a42a44cd1b0a0d1174
   m_configObjects: {}

@@ -44,7 +44,7 @@ public class PurpleFoxSpirit : Enemy
 
     private void Awake()
     {
-        setTimer(0.6f); // Changing the AI Timer, it should take a lot longer for this spirit to get moving
+        setTimer(1.5f); // Changing the AI Timer, it should take a lot longer for this spirit to get moving
         playerLocation.Add(-1);
         playerLocation.Add(-1);
         justWokeUp = true;

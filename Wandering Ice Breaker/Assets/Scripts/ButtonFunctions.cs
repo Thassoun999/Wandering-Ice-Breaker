@@ -46,7 +46,7 @@ public class ButtonFunctions : MonoBehaviour {
             {
                 SceneManager.LoadScene(2);
             }
-            else if(PlayerPrefs.GetInt("levelAt") + 1 > SceneManager.sceneCountInBuildSettings - 2)
+            else if(PlayerPrefs.GetInt("levelAt") + 1 > SceneManager.sceneCountInBuildSettings - 3)
             {
                 SceneManager.LoadScene(PlayerPrefs.GetInt("levelAt"));
             }

@@ -92,3 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773c9ea01f7b46947bb64002b61a4b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  row: 0
+  col: 0
+  isHit: 0
+  manager: {fileID: 0}
+  pause: 0
+  startedMoving: 0
