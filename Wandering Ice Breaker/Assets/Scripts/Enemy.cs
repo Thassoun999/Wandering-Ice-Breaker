@@ -9,9 +9,11 @@ public class Enemy : MonoBehaviour {
     public int col;
     protected List<int> walkableTiles = new List<int>(); //List of which sprites can be stood on
     public float aiTimer = 1; //How long until enemy moves (may change depending on enemy type)
+    public PlayerMovement pm;
 
     public void Start()
     {
+        pm = GameObject.Find("fox(clone)").GetComponent<PlayerMovement>();
         StartCoroutine(MovementTimer());
         walkableTiles.Add(0);
         walkableTiles.Add(1);

@@ -11,6 +11,10 @@ public class ButtonFunctions : MonoBehaviour {
     bool isInt;
     int level = 0;
 
+    public GameObject settingsMenu;
+    bool optionsShown = false;
+    public PlayerMovement pm;
+
     void Start()
     {
         txt = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text;
@@ -47,13 +51,34 @@ public class ButtonFunctions : MonoBehaviour {
         {
             SceneManager.LoadScene(1);
         }
-        else if (txt == "options" || txt == "Options")
+        else if (txt == "Clear Save Data")
         {
-            SceneManager.LoadScene(0);
+            PlayerPrefs.SetInt("levelAt", 1);
         }
-        else if (txt == "credits" || txt == "Credits")
+    }
+
+    public void optionButton()
+    {
+        if (optionsShown)
         {
-            SceneManager.LoadScene(0);
+            optionBackButton();
         }
+        else
+        {
+            settingsMenu.SetActive(true);
+            pm = GameObject.Find("fox(Clone)").GetComponent<PlayerMovement>();
+            pm.pause = true;
+            Time.timeScale = 0;
+            optionsShown = true;
+        }
+    }
+
+    public void optionBackButton()
+    {
+        settingsMenu.SetActive(false);
+        pm = GameObject.Find("fox(Clone)").GetComponent<PlayerMovement>();
+        pm.pause = false;
+        Time.timeScale = 1;
+        optionsShown = false;
     }
 }
