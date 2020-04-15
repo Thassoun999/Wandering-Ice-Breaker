@@ -7,17 +7,17 @@ using UnityEngine.UI;
 public class SettingsMenu : MonoBehaviour {
 
     public AudioMixer audioMixer;
+    //public AudioMixer soundEffectMixer;
     public GameObject mainMenuButtons;
     public GameObject settingsMenu;
     public GameObject credits;
     public Slider slider;
-
+    AudioSource audioSource;
 
     void Start()
     {
-        //slider = GameObject.Find("/Canvas/settingsMenu/Slider").GetComponent<slider>();
-
-        if(mainMenuButtons != null && settingsMenu != null)
+        audioSource = GameObject.Find("Sound Effects").GetComponent<AudioSource>();
+        if (mainMenuButtons != null && settingsMenu != null)
         {
             mainMenuButtons.SetActive(true);
             settingsMenu.SetActive(false);
@@ -47,6 +47,8 @@ public class SettingsMenu : MonoBehaviour {
         mainMenuButtons.SetActive(true);
         settingsMenu.SetActive(false);
         credits.SetActive(false);
+        audioSource.clip = Resources.Load("crack", typeof(AudioClip)) as AudioClip;
+        audioSource.Play();
     }
 
     public void MainMenuTransitionSettings()
@@ -54,6 +56,8 @@ public class SettingsMenu : MonoBehaviour {
         mainMenuButtons.SetActive(false);
         settingsMenu.SetActive(true);
         credits.SetActive(false);
+        audioSource.clip = Resources.Load("win", typeof(AudioClip)) as AudioClip;
+        audioSource.Play();
     }
 
     public void MainMenuTransitionCredits()
@@ -61,5 +65,7 @@ public class SettingsMenu : MonoBehaviour {
         mainMenuButtons.SetActive(false);
         settingsMenu.SetActive(false);
         credits.SetActive(true);
+        audioSource.clip = Resources.Load("win", typeof(AudioClip)) as AudioClip;
+        audioSource.Play();
     }
 }

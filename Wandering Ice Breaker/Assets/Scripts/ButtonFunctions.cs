@@ -1,5 +1,5 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,8 +12,8 @@ public class ButtonFunctions : MonoBehaviour {
     int level = 0;
 
     public GameObject settingsMenu;
-    bool optionsShown = false;
     public PlayerMovement pm;
+    AudioSource audioSource;
 
     void Start()
     {
@@ -23,6 +23,8 @@ public class ButtonFunctions : MonoBehaviour {
         {
             this.gameObject.GetComponent<Button>().interactable = false;
         }
+
+        audioSource = GameObject.Find("Sound Effects").GetComponent<AudioSource>();
     }
 
     
@@ -31,14 +33,20 @@ public class ButtonFunctions : MonoBehaviour {
         if (isInt)
         {
             SceneManager.LoadScene(1 + level);
+            StartCoroutine(PlayUpbeatSoundEffect());
         }
         else if (txt == "back" || txt == "Main Menu")
         {
             SceneManager.LoadScene(0);
+            StartCoroutine(PlayMediumSoundEffect());
         }
         else if (txt == "play" || txt == "Play")
         {
-            if(PlayerPrefs.GetInt("levelAt") + 1 > SceneManager.sceneCountInBuildSettings - 2)
+            if(!PlayerPrefs.HasKey("levelAt") || PlayerPrefs.GetInt("levelAt") == 1)
+            {
+                SceneManager.LoadScene(2);
+            }
+            else if(PlayerPrefs.GetInt("levelAt") + 1 > SceneManager.sceneCountInBuildSettings - 2)
             {
                 SceneManager.LoadScene(PlayerPrefs.GetInt("levelAt"));
             }
@@ -46,39 +54,63 @@ public class ButtonFunctions : MonoBehaviour {
             {
                 SceneManager.LoadScene(PlayerPrefs.GetInt("levelAt") + 1);
             }
+            StartCoroutine(PlayUpbeatSoundEffect());
         }
         else if (txt == "levels" || txt == "Levels")
         {
             SceneManager.LoadScene(1);
+            StartCoroutine(PlayUpbeatSoundEffect());
         }
         else if (txt == "Clear Save Data")
         {
             PlayerPrefs.SetInt("levelAt", 1);
+            StartCoroutine(PlayDownbeatSoundEffect());
         }
     }
 
     public void optionButton()
     {
-        if (optionsShown)
-        {
-            optionBackButton();
-        }
-        else
+        if (!settingsMenu.activeSelf)
         {
             settingsMenu.SetActive(true);
             pm = GameObject.Find("fox(Clone)").GetComponent<PlayerMovement>();
             pm.pause = true;
             Time.timeScale = 0;
-            optionsShown = true;
+            StartCoroutine(PlayUpbeatSoundEffect());
         }
+        else
+        {
+            optionBackButton();
+        }
+        
     }
 
     public void optionBackButton()
     {
-        settingsMenu.SetActive(false);
         pm = GameObject.Find("fox(Clone)").GetComponent<PlayerMovement>();
         pm.pause = false;
         Time.timeScale = 1;
-        optionsShown = false;
+        StartCoroutine(PlayMediumSoundEffect());
+        settingsMenu.SetActive(false);
+    }
+
+    IEnumerator PlayUpbeatSoundEffect()
+    {
+        audioSource.clip = Resources.Load("win", typeof(AudioClip)) as AudioClip;
+        audioSource.Play();
+        yield return null;
+    }
+    IEnumerator PlayDownbeatSoundEffect()
+    {
+        audioSource.clip = Resources.Load("lose", typeof(AudioClip)) as AudioClip;
+        audioSource.Play();
+        yield return null;
+    }
+
+    IEnumerator PlayMediumSoundEffect()
+    {
+        audioSource.clip = Resources.Load("crack", typeof(AudioClip)) as AudioClip;
+        audioSource.Play();
+        yield return null;
     }
 }

@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour {
 
     public void Start()
     {
-        pm = GameObject.Find("fox(clone)").GetComponent<PlayerMovement>();
+        pm = GameObject.Find("fox(Clone)").GetComponent<PlayerMovement>();
         StartCoroutine(MovementTimer());
         walkableTiles.Add(0);
         walkableTiles.Add(1);

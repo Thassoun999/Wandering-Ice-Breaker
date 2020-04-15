@@ -2,9 +2,9 @@
 
 public class DontDestroy : MonoBehaviour {
     
-    void Start()
+    void Awake()
     {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("music");
+        GameObject[] objs = GameObject.FindGameObjectsWithTag(gameObject.tag);
 
         if (objs.Length > 1)
         {

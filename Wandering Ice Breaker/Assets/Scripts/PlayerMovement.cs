@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour {
     private List<int> walkableTiles = new List<int>(); //List of which sprites can be stood on
 
     public bool pause = false;
+    public bool startedMoving = false;
     private float slipSpeed = 1;
     Vector3 dirVector;
 
@@ -41,6 +42,7 @@ public class PlayerMovement : MonoBehaviour {
                 gameObject.transform.position = gameObject.transform.position + new Vector3(0, 0.64f, 0);
                 row--;
                 manager.UpdateTile(row, col, 0);
+                startedMoving = true;
             }
 
         }
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour {
                 gameObject.transform.position = gameObject.transform.position + new Vector3(0, -0.64f, 0);
                 row++;
                 manager.UpdateTile(row, col, 1);
+                startedMoving = true;
             }
 
         }
@@ -61,6 +64,7 @@ public class PlayerMovement : MonoBehaviour {
                 gameObject.transform.position = gameObject.transform.position + new Vector3(-0.64f, 0, 0);
                 col--;
                 manager.UpdateTile(row, col, 2);
+                startedMoving = true;
             }
 
         }
@@ -71,7 +75,7 @@ public class PlayerMovement : MonoBehaviour {
                 gameObject.transform.position = gameObject.transform.position + new Vector3(0.64f, 0, 0);
                 col++;
                 manager.UpdateTile(row, col, 3);
-
+                startedMoving = true;
             }
 
         }

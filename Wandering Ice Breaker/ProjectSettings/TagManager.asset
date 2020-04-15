@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - music
+  - sound effects
   layers:
   - Default
   - TransparentFX

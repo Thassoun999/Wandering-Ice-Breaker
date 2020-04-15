@@ -54,6 +54,12 @@ public class PurpleFoxSpirit : Enemy
     }
     override public void Move() // A* Movement 
     {
+        if (!pm.startedMoving) // Fox doesn't move until player has started to move
+        {
+            return;
+        }
+
+
         // Have a record of where the player is, what are the walkable paths, and heuristic
         // f(n) = g(n) + h(n)
         // g(n) - Movement cost to move from starting point to any given square on the grid, following the path generated from there

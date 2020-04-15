@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour {
     public GameObject foxPrefab;
     private PlayerMovement pm;
     private Sprite[] iceSprites;
+    public GameObject WaterTilePrefab;
 
     public GameObject GreyFoxSpiritPrefab;
     public GameObject WhiteFoxSpiritPrefab;
@@ -36,7 +37,7 @@ public class LevelManager : MonoBehaviour {
 
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GameObject.FindGameObjectWithTag("sound effects").GetComponent<AudioSource>();
         iceSprites = Resources.LoadAll<Sprite>("Ice Tile");
 
         //Load level data from CVS with name matching the scene, i.e. Scene "LV2" uses "LV2.csv"
@@ -152,11 +153,21 @@ public class LevelManager : MonoBehaviour {
             tiles.Add(new List<GameObject>());
             for(int j = 0; j < gridStatus[i].Count; j++)
             {
-                GameObject tile = Instantiate(ice, new Vector3( (j-centerC) * 0.64f, (centerR-i) * 0.64f, transform.position.z) , Quaternion.identity);
-                tile.transform.parent = this.gameObject.transform;
-                tile.GetComponent<SpriteRenderer>().sprite = iceSprites[gridStatus[i][j]];
-                tile.name = i + " " + j;
-                tiles[i].Add(tile);
+                if(gridStatus[i][j] == 7) // Water tiles have their own prefab with an animation
+                {
+                    GameObject tile = Instantiate(WaterTilePrefab, new Vector3((j - centerC) * 0.64f, (centerR - i) * 0.64f, transform.position.z), Quaternion.identity);
+                    tile.transform.parent = this.gameObject.transform;
+                    tile.name = i + " " + j;
+                    tiles[i].Add(tile);
+                }
+                else
+                {
+                    GameObject tile = Instantiate(ice, new Vector3((j - centerC) * 0.64f, (centerR - i) * 0.64f, transform.position.z), Quaternion.identity);
+                    tile.transform.parent = this.gameObject.transform;
+                    tile.GetComponent<SpriteRenderer>().sprite = iceSprites[gridStatus[i][j]];
+                    tile.name = i + " " + j;
+                    tiles[i].Add(tile);
+                }
             }
         }
 
