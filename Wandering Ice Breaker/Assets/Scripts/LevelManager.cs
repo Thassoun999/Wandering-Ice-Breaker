@@ -258,6 +258,7 @@ public class LevelManager : MonoBehaviour {
         {
             PlayerPrefs.SetInt("levelAt", nextScene - 1);
         }
+        PlayerPrefs.Save();
         SceneManager.LoadScene(nextScene);
     }
 

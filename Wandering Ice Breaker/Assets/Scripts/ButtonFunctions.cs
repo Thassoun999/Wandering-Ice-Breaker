@@ -8,8 +8,8 @@ using TMPro;
 public class ButtonFunctions : MonoBehaviour {
 
     public string txt;
-    bool isInt;
-    int level = 0;
+    public bool isInt;
+    public int level;
 
     public GameObject settingsMenu;
     public PlayerMovement pm;
@@ -19,11 +19,14 @@ public class ButtonFunctions : MonoBehaviour {
     {
         txt = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text;
         isInt = int.TryParse(txt, out level);
-        if(level > PlayerPrefs.GetInt("levelAt"))
+        if (isInt)
         {
-            this.gameObject.GetComponent<Button>().interactable = false;
+            level = int.Parse(gameObject.name.Substring(5));
+            if (level > PlayerPrefs.GetInt("levelAt", 1))
+            {
+                this.gameObject.GetComponent<Button>().interactable = false;
+            }
         }
-
         audioSource = GameObject.Find("Sound Effects").GetComponent<AudioSource>();
     }
 
@@ -63,9 +66,11 @@ public class ButtonFunctions : MonoBehaviour {
         }
         else if (txt == "Clear Save Data")
         {
+            //PlayerPrefs.DeleteAll()
             PlayerPrefs.SetInt("levelAt", 1);
             StartCoroutine(PlayDownbeatSoundEffect());
         }
+        PlayerPrefs.Save();
     }
 
     public void optionButton()

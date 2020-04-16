@@ -9,7 +9,7 @@ public class LevelSelectionManager : MonoBehaviour
     public GameObject levelHolder;
     public GameObject levelIcon;
     public GameObject thisCanvas;
-    public int numberOfLevels = 50;
+    public int numberOfLevels = 30;
     public Vector2 iconSpacing;
     private Rect panelDimensions;
     private Rect iconDimensions;
@@ -18,7 +18,7 @@ public class LevelSelectionManager : MonoBehaviour
 
     void Awake()
     {
-        if (PlayerPrefs.GetInt("levelAt") == 0)
+        if (PlayerPrefs.GetInt("levelAt") == 0 || !PlayerPrefs.HasKey("levelAt"))
         {
             PlayerPrefs.SetInt("levelAt", 1);
         }
