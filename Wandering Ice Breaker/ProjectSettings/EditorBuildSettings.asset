@@ -96,6 +96,18 @@ EditorBuildSettings:
     path: Assets/Scenes/L28.unity
     guid: 572bf1607c93aea40bd6630119ba028f
   - enabled: 1
+    path: Assets/Scenes/L29.unity
+    guid: d02bc8fa76cfc764c9ba4e1ba72f5f1f
+  - enabled: 1
+    path: Assets/Scenes/L30.unity
+    guid: fa6e8da53e715ff4495509af222ee394
+  - enabled: 1
+    path: Assets/Scenes/L31.unity
+    guid: 4caef8089d7688248ace62b4a285bbda
+  - enabled: 1
+    path: Assets/Scenes/L32.unity
+    guid: 94cfe526ea26e03408b1f28a5fd182ab
+  - enabled: 1
     path: Assets/Scenes/End Screen.unity
     guid: de50a5ac506e80a42a44cd1b0a0d1174
   m_configObjects: {}

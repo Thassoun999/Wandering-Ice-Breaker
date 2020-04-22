@@ -97,7 +97,7 @@ public class LevelManager : MonoBehaviour {
         {
             for (int j = 0; j < gridStatus[i].Count; j++)
             {
-                // Grey Fox Spirit Enemy Location --> 11 for Horizontal, 12 for Vertical
+                // Grey Fox Spirit Enemy Location --> 11 for Horizontal, 12 for Vertical w/ ice underneath
                 if (gridStatus[i][j] == 11 || gridStatus[i][j] == 12)
                 {
                     GameObject enemy = Instantiate(GreyFoxSpiritPrefab, new Vector3((j - centerC) * 0.64f, (centerR - i) * 0.64f, transform.position.z), Quaternion.identity);
@@ -116,6 +116,28 @@ public class LevelManager : MonoBehaviour {
                     enemyList.Add(enemy);
 
                     gridStatus[i][j] = 0; // Change the bottom into the appropriate tile
+                }
+
+                // Grey Fox Spirit Enemy Location --> 15 for Horizontal, 16 for Vertical w/ rock underneath (also reversed starting movement)
+                if (gridStatus[i][j] == 15 || gridStatus[i][j] == 16)
+                {
+                    GameObject enemy = Instantiate(GreyFoxSpiritPrefab, new Vector3((j - centerC) * 0.64f, (centerR - i) * 0.64f, transform.position.z), Quaternion.identity);
+                    enemy.AddComponent<GreyFoxSpirit>();
+                    enemy.GetComponent<Enemy>().row = i;
+                    enemy.GetComponent<Enemy>().col = j;
+                    enemy.GetComponent<Enemy>().manager = this;
+                    enemy.GetComponent<GreyFoxSpirit>().orientation = false;
+                    if (gridStatus[i][j] == 15)
+                    {
+                        enemy.GetComponent<GreyFoxSpirit>().direction = "horizontal";
+                    }
+                    else
+                    {
+                        enemy.GetComponent<GreyFoxSpirit>().direction = "vertical";
+                    }
+                    enemyList.Add(enemy);
+
+                    gridStatus[i][j] = 6; // Change the bottom into the appropriate tile
                 }
 
                 // White Fox Spirit Enemy Location --> 13
