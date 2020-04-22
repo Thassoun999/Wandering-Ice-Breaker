@@ -710,8 +710,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txt: 
+  isInt: 0
+  level: 0
   settingsMenu: {fileID: 0}
-  optionsShown: 0
   pm: {fileID: 0}
 --- !u!114 &239260328
 MonoBehaviour:
@@ -810,6 +811,7 @@ GameObject:
   - component: {fileID: 270894645}
   - component: {fileID: 270894644}
   - component: {fileID: 270894643}
+  - component: {fileID: 270894646}
   m_Layer: 0
   m_Name: Music
   m_TagString: music
@@ -940,6 +942,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &270894646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270894642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f982c2e6bbb8d44bf64b4f3389e126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &406234849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,8 +1715,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txt: 
+  isInt: 0
+  level: 0
   settingsMenu: {fileID: 0}
-  optionsShown: 0
   pm: {fileID: 0}
 --- !u!1 &713444740
 GameObject:
@@ -2251,8 +2266,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txt: 
+  isInt: 0
+  level: 0
   settingsMenu: {fileID: 0}
-  optionsShown: 0
   pm: {fileID: 0}
 --- !u!114 &1091868489
 MonoBehaviour:
@@ -4343,8 +4359,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txt: 
+  isInt: 0
+  level: 0
   settingsMenu: {fileID: 0}
-  optionsShown: 0
   pm: {fileID: 0}
 --- !u!114 &9146274087083839866
 MonoBehaviour:

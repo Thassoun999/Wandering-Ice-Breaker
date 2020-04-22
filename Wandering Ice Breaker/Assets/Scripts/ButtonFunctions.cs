@@ -26,6 +26,10 @@ public class ButtonFunctions : MonoBehaviour {
             {
                 this.gameObject.GetComponent<Button>().interactable = false;
             }
+            else if(level > SceneManager.sceneCountInBuildSettings - 3)
+            {
+                this.gameObject.GetComponent<Button>().interactable = false;
+            }
         }
         audioSource = GameObject.Find("Sound Effects").GetComponent<AudioSource>();
     }
@@ -51,7 +55,7 @@ public class ButtonFunctions : MonoBehaviour {
             }
             else if(PlayerPrefs.GetInt("levelAt") + 1 > SceneManager.sceneCountInBuildSettings - 3)
             {
-                SceneManager.LoadScene(PlayerPrefs.GetInt("levelAt"));
+                SceneManager.LoadScene(PlayerPrefs.GetInt("levelAt")-1);
             }
             else
             {
@@ -68,6 +72,8 @@ public class ButtonFunctions : MonoBehaviour {
         {
             //PlayerPrefs.DeleteAll()
             PlayerPrefs.SetInt("levelAt", 1);
+            PlayerPrefs.SetInt("deaths", 0);
+            PlayerPrefs.SetString("playtime", "0:00");
             StartCoroutine(PlayDownbeatSoundEffect());
         }
         PlayerPrefs.Save();
