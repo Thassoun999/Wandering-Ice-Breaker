@@ -265,7 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f982c2e6bbb8d44bf64b4f3389e126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0
 --- !u!1 &289510936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1229,7 @@ MonoBehaviour:
   levelIcon: {fileID: 8435710273967514894, guid: 43057f2f72a32d147979f1e0c3cc4b26,
     type: 3}
   thisCanvas: {fileID: 1729594453}
-  numberOfLevels: 30
+  numberOfLevels: 35
   iconSpacing: {x: 40, y: 40}
 --- !u!1 &851014851946063340
 GameObject:

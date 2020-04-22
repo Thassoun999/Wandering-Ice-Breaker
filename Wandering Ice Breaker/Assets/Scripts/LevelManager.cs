@@ -267,8 +267,8 @@ public class LevelManager : MonoBehaviour {
         pm.pause = true;
         audioSource.PlayOneShot(loseSound);
         PlayerPrefs.SetInt("deaths", PlayerPrefs.GetInt("deaths", 0) + 1);
-        Debug.Log(PlayerPrefs.GetInt("deaths") + " deaths");
-        Debug.Log(PlayerPrefs.GetString("playtime"));
+        //Debug.Log(PlayerPrefs.GetInt("deaths") + " deaths");
+        //Debug.Log(PlayerPrefs.GetString("playtime"));
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

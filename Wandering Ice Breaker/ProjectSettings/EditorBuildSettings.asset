@@ -108,6 +108,15 @@ EditorBuildSettings:
     path: Assets/Scenes/L32.unity
     guid: 94cfe526ea26e03408b1f28a5fd182ab
   - enabled: 1
+    path: Assets/Scenes/L33.unity
+    guid: 195052556a82ab94d959ac6bcf448025
+  - enabled: 1
+    path: Assets/Scenes/L34.unity
+    guid: 51e48d30b90a6ba4f9a0ae300e1891da
+  - enabled: 1
+    path: Assets/Scenes/L35.unity
+    guid: fed5c811cdccde0429c9072f23dc99bf
+  - enabled: 1
     path: Assets/Scenes/End Screen.unity
     guid: de50a5ac506e80a42a44cd1b0a0d1174
   m_configObjects: {}
