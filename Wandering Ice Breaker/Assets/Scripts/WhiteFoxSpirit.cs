@@ -18,44 +18,54 @@ public class WhiteFoxSpirit : Enemy
         {
             if ((Input.GetKeyDown("up") || Input.GetKeyDown("w")))
             {
-                if (walkableTiles.Contains(manager.gridStatus[row + 1][col]))
-                {
-                    gameObject.transform.position = gameObject.transform.position + new Vector3(0, -0.64f, 0);
-                    row++;
-                }
-
+                MoveUp();
             }
             if ((Input.GetKeyDown("down") || Input.GetKeyDown("s")))
             {
-                if (walkableTiles.Contains(manager.gridStatus[row - 1][col]))
-                {
-                    gameObject.transform.position = gameObject.transform.position + new Vector3(0, 0.64f, 0);
-                    row--;
-
-                }
-
+                MoveDown();
             }
             if ((Input.GetKeyDown("left") || Input.GetKeyDown("a")))
             {
-                if (walkableTiles.Contains(manager.gridStatus[row][col + 1]))
-                {
-                    gameObject.transform.position = gameObject.transform.position + new Vector3(0.64f, 0, 0);
-                    col++;
-
-                }
-
+                MoveLeft();
             }
             if ((Input.GetKeyDown("right") || Input.GetKeyDown("d")))
             {
-                if (walkableTiles.Contains(manager.gridStatus[row][col - 1]))
-                {
-                    gameObject.transform.position = gameObject.transform.position + new Vector3(-0.64f, 0, 0);
-                    col--;
-
-                }
-
+                MoveRight();
             }
         }
         
+    }
+
+    public void MoveUp()
+    {
+        if (walkableTiles.Contains(manager.gridStatus[row + 1][col]))
+        {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(0, -0.64f, 0);
+            row++;
+        }
+    }
+    public void MoveDown()
+    {
+        if (walkableTiles.Contains(manager.gridStatus[row - 1][col]))
+        {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(0, 0.64f, 0);
+            row--;
+        }
+    }
+    public void MoveLeft()
+    {
+        if (walkableTiles.Contains(manager.gridStatus[row][col + 1]))
+        {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(0.64f, 0, 0);
+            col++;
+        }
+    }
+    public void MoveRight()
+    {
+        if (walkableTiles.Contains(manager.gridStatus[row][col - 1]))
+        {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(-0.64f, 0, 0);
+            col--;
+        }
     }
 }

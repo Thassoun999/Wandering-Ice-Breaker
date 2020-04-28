@@ -35,49 +35,21 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         //Movement controls
-        if ((Input.GetKeyDown("up") || Input.GetKeyDown("w")) && !pause)
+        if ((Input.GetKeyDown("up") || Input.GetKeyDown("w")))
         {
-            if (walkableTiles.Contains(manager.gridStatus[row - 1][col]))
-            {
-                gameObject.transform.position = gameObject.transform.position + new Vector3(0, 0.64f, 0);
-                row--;
-                manager.UpdateTile(row, col, 0);
-                startedMoving = true;
-            }
-
+            MoveUp();
         }
-        if ((Input.GetKeyDown("down") || Input.GetKeyDown("s")) && !pause)
+        if ((Input.GetKeyDown("down") || Input.GetKeyDown("s")))
         {
-            if (walkableTiles.Contains(manager.gridStatus[row + 1][col]))
-            {
-                gameObject.transform.position = gameObject.transform.position + new Vector3(0, -0.64f, 0);
-                row++;
-                manager.UpdateTile(row, col, 1);
-                startedMoving = true;
-            }
-
+            MoveDown();
         }
-        if ((Input.GetKeyDown("left") || Input.GetKeyDown("a")) && !pause)
+        if ((Input.GetKeyDown("left") || Input.GetKeyDown("a")))
         {
-            if (walkableTiles.Contains(manager.gridStatus[row][col - 1]))
-            {
-                gameObject.transform.position = gameObject.transform.position + new Vector3(-0.64f, 0, 0);
-                col--;
-                manager.UpdateTile(row, col, 2);
-                startedMoving = true;
-            }
-
+            MoveLeft();
         }
-        if ((Input.GetKeyDown("right") || Input.GetKeyDown("d")) && !pause)
+        if ((Input.GetKeyDown("right") || Input.GetKeyDown("d")))
         {
-            if (walkableTiles.Contains(manager.gridStatus[row][col + 1]))
-            {
-                gameObject.transform.position = gameObject.transform.position + new Vector3(0.64f, 0, 0);
-                col++;
-                manager.UpdateTile(row, col, 3);
-                startedMoving = true;
-            }
-
+            MoveRight();
         }
     }
 
@@ -168,4 +140,44 @@ public class PlayerMovement : MonoBehaviour {
         manager.UpdateTile(row, col, direction);
     }
 
+    public void MoveUp()
+    {
+        if (walkableTiles.Contains(manager.gridStatus[row - 1][col]) && !pause)
+        {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(0, 0.64f, 0);
+            row--;
+            manager.UpdateTile(row, col, 0);
+            startedMoving = true;
+        }
+    }
+    public void MoveDown()
+    {
+        if (walkableTiles.Contains(manager.gridStatus[row + 1][col]) && !pause)
+        {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(0, -0.64f, 0);
+            row++;
+            manager.UpdateTile(row, col, 1);
+            startedMoving = true;
+        }
+    }
+    public void MoveLeft()
+    {
+        if (walkableTiles.Contains(manager.gridStatus[row][col - 1]) && !pause)
+        {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(-0.64f, 0, 0);
+            col--;
+            manager.UpdateTile(row, col, 2);
+            startedMoving = true;
+        }
+    }
+    public void MoveRight()
+    {
+        if (walkableTiles.Contains(manager.gridStatus[row][col + 1]) && !pause)
+        {
+            gameObject.transform.position = gameObject.transform.position + new Vector3(0.64f, 0, 0);
+            col++;
+            manager.UpdateTile(row, col, 3);
+            startedMoving = true;
+        }
+    }
 }
