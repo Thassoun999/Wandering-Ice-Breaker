@@ -31,7 +31,12 @@ public class LevelManager : MonoBehaviour {
     public AudioClip loseSound;
     public AudioClip winSound;
     AudioSource audioSource;
-    
+
+    public GameObject background1;
+    public GameObject background2;
+    public GameObject background3;
+    public GameObject background4;
+    public GameObject background5;
 
     private List<int> walkableTiles = new List<int>(); //List of which sprites can be stood on
 
@@ -224,6 +229,32 @@ public class LevelManager : MonoBehaviour {
             }
         }
 
+    }
+
+    void Start()
+    {
+        //Pick Background Image based on level
+        int level = int.Parse(SceneManager.GetActiveScene().name.Substring(1));
+        if (level <= 10)
+        {
+            background1.SetActive(true);
+        }
+        else if (level <= 20)
+        {
+            background2.SetActive(true);
+        }
+        else if (level <= 30)
+        {
+            background3.SetActive(true);
+        }
+        else if (level <= 40)
+        {
+            background4.SetActive(true);
+        }
+        else if (level <= 50)
+        {
+            background5.SetActive(true);
+        }
     }
 
     void Update()
