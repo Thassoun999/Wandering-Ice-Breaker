@@ -140,6 +140,37 @@ public class LevelManager : MonoBehaviour {
                     gridStatus[i][j] = 6; // Change the bottom into the appropriate tile
                 }
 
+                // Grey Fox Spirit Enemy Location --> 20/21 for Horizontal Left/Right, 22/23 for Vertical Up/Down w/ slip underneath (also more case starting movement)
+                if (gridStatus[i][j] == 20 || gridStatus[i][j] == 21 || gridStatus[i][j] == 22 || gridStatus[i][j] == 23)
+                {
+                    GameObject enemy = Instantiate(GreyFoxSpiritPrefab, new Vector3((j - centerC) * 0.64f, (centerR - i) * 0.64f, transform.position.z), Quaternion.identity);
+                    enemy.AddComponent<GreyFoxSpirit>();
+                    enemy.GetComponent<Enemy>().row = i;
+                    enemy.GetComponent<Enemy>().col = j;
+                    enemy.GetComponent<Enemy>().manager = this;
+                    
+                    if (gridStatus[i][j] == 20)
+                    {
+                        enemy.GetComponent<GreyFoxSpirit>().direction = "horizontal";
+                        enemy.GetComponent<GreyFoxSpirit>().orientation = false;
+                    }
+                    else if (gridStatus[i][j] == 21)
+                    {
+                        enemy.GetComponent<GreyFoxSpirit>().direction = "horizontal";
+                        enemy.GetComponent<GreyFoxSpirit>().orientation = true;
+                    } else if (gridStatus[i][j] == 22) {
+                        enemy.GetComponent<GreyFoxSpirit>().direction = "vertical";
+                        enemy.GetComponent<GreyFoxSpirit>().orientation = true;
+                    } else if (gridStatus[i][j] == 23)
+                    {
+                        enemy.GetComponent<GreyFoxSpirit>().direction = "vertical";
+                        enemy.GetComponent<GreyFoxSpirit>().orientation = false;
+                    }
+                    enemyList.Add(enemy);
+
+                    gridStatus[i][j] = 4; // Change the bottom into the appropriate tile
+                }
+
                 // White Fox Spirit Enemy Location --> 13
                 if (gridStatus[i][j] == 13)
                 {
