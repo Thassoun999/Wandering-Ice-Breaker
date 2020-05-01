@@ -793,6 +793,7 @@ MonoBehaviour:
   level: 0
   settingsMenu: {fileID: 0}
   pm: {fileID: 0}
+  OnScreenButtons: {fileID: 0}
 --- !u!114 &239260328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2061,6 +2062,7 @@ MonoBehaviour:
   level: 0
   settingsMenu: {fileID: 0}
   pm: {fileID: 0}
+  OnScreenButtons: {fileID: 0}
 --- !u!1 &713444740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2613,6 +2615,7 @@ MonoBehaviour:
   level: 0
   settingsMenu: {fileID: 0}
   pm: {fileID: 0}
+  OnScreenButtons: {fileID: 0}
 --- !u!114 &1091868489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5325,6 +5328,7 @@ MonoBehaviour:
   level: 0
   settingsMenu: {fileID: 0}
   pm: {fileID: 0}
+  OnScreenButtons: {fileID: 0}
 --- !u!114 &9146274087083839866
 MonoBehaviour:
   m_ObjectHideFlags: 0

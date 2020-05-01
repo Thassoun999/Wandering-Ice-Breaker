@@ -13,6 +13,7 @@ public class ButtonFunctions : MonoBehaviour {
 
     public GameObject settingsMenu;
     public PlayerMovement pm;
+    public GameObject OnScreenButtons;
     AudioSource audioSource;
 
     void Start()
@@ -87,6 +88,10 @@ public class ButtonFunctions : MonoBehaviour {
             pm = GameObject.Find("fox(Clone)").GetComponent<PlayerMovement>();
             pm.pause = true;
             Time.timeScale = 0;
+            if(OnScreenButtons != null)
+            {
+                OnScreenButtons.SetActive(false);
+            }
             StartCoroutine(PlayUpbeatSoundEffect());
         }
         else
@@ -101,6 +106,10 @@ public class ButtonFunctions : MonoBehaviour {
         pm = GameObject.Find("fox(Clone)").GetComponent<PlayerMovement>();
         pm.pause = false;
         Time.timeScale = 1;
+        if ((PlayerPrefs.GetInt("buttonToggle") == 1))
+        {
+            OnScreenButtons.SetActive(true);
+        }
         StartCoroutine(PlayMediumSoundEffect());
         settingsMenu.SetActive(false);
     }
