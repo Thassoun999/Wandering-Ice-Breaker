@@ -922,7 +922,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: e0285e120e56a114685d8a45797bfc40,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 1e4a6862e25b20e41ad83a3b19d6deb1, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 92345716d0a5184409529bbe7af42d77, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -1672,8 +1672,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -341.2}
-  m_SizeDelta: {x: 0, y: 682.7}
+  m_AnchoredPosition: {x: 0, y: -435.4}
+  m_SizeDelta: {x: 0, y: 870.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &600725643
 MonoBehaviour:
@@ -1702,6 +1702,11 @@ MonoBehaviour:
     Tarek Hassoun
 
     Tyler Ye
+
+
+    --Music--
+
+    Flower Garden - Ryo and Yoshikazu Matuura
 
 
     --Art--
@@ -1791,12 +1796,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 600725643}
-    characterCount: 249
+    characterCount: 302
     spriteCount: 0
-    spaceCount: 47
-    wordCount: 41
+    spaceCount: 56
+    wordCount: 49
     linkCount: 0
-    lineCount: 26
+    lineCount: 31
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
